@@ -19,6 +19,7 @@
 
 # [+] --- ADDITION: MICHAEL BOYER, 18 APR 2025 ------
 # Better formatting for input prompt; new input validation logic
+purchase_amount = 0.0
 valid = False
 while not valid:
       try:

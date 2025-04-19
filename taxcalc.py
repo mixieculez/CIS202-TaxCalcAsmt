@@ -31,11 +31,11 @@ valid = False
 # While the input is not valid (can't be converted to a float), prompt the
 # user to enter a valid input
 while not valid:
-      try:
-            purchase_amount = float(input("Enter purchase amount (i.e. 200): $"))
-            valid = True
-      except ValueError:
-            print("Invalid input. Please enter a numerical value for purchase amount.")
+    try:
+        purchase_amount = float(input("Enter purchase amount (i.e. 200): $"))
+        valid = True
+    except ValueError:
+        print("Invalid input. Please enter a numerical value for purchase amount.")
 
 # [-] --- DELETION: MICHAEL BOYER, 18 APR 2025 ---
 # stateTax = 0.05 * purchase_amount
@@ -44,13 +44,13 @@ while not valid:
 # Add the new tax graduation logic
 # If the purchase is less than $100, half the tax rate is applied
 if purchase_amount <= 100:
-      stateTax = (0.05 / 2) * purchase_amount
+    stateTax = (0.05 / 2) * purchase_amount
 # Otherwise, if it's less than $500, the tax rate is 3/4 of the full rate
 elif purchase_amount <= 500:
-      stateTax = (0.05 / 2) * 100 + (0.05 * 3/4) * (purchase_amount - 100)
+    stateTax = (0.05 / 2) * 100 + (0.05 * 3/4) * (purchase_amount - 100)
 # And finally, if it's more than $500, the tax rate is full rate
 else:
-      stateTax = ((0.05 / 2) * 100 + (0.05 * 3/4) * 400 + 0.05 * (purchase_amount - 500))
+    stateTax = ((0.05 / 2) * 100 + (0.05 * 3/4) * 400 + 0.05 * (purchase_amount - 500))
 
 countyTax = 0.025 * purchase_amount
 totalTax = stateTax + countyTax
@@ -65,6 +65,6 @@ totalSale = purchase_amount + totalTax
 # Corrected formatting syntax, moved values to new lines,
 # corrected "Purchase_amount" to "Purchase amount"
 print("Purchase amount: $" + format(purchase_amount, ".2f"),
-      "\nState tax: $" + format(stateTax, ".2f"), "\nCounty tax: $" +
-      format(countyTax, ".2f"), "\nTotal tax: $" + format(totalTax, ".2f"),
-      "\nTotal sales: $" + format(totalSale, ".2f"))
+    "\nState tax: $" + format(stateTax, ".2f"), "\nCounty tax: $" +
+    format(countyTax, ".2f"), "\nTotal tax: $" + format(totalTax, ".2f"),
+    "\nTotal sales: $" + format(totalSale, ".2f"))

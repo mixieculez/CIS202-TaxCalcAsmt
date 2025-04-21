@@ -18,53 +18,69 @@
 #
 # Begin your program after this line
 
-# [-] --- DELETION: MICHAEL BOYER, 18 APR 2025 ---
-# purchase_amount = float(input("Enter purchase amount: ")
-# )
-
-# [+] --- ADDITION: MICHAEL BOYER, 18 APR 2025 ------
-# Better formatting for input prompt; new input validation logic
-# Initialize purchase_amount and validity of input as inherently false
+# Michael Boyer (04/20/2025)
+# Initialize variables for validity check and user input
 purchase_amount = 0.0
 valid = False
+# ----------
 
-# While the input is not valid (can't be converted to a float), prompt the
-# user to enter a valid input
+# [-] Removed by Michael Boyer (04/20/2025)
+# purchase_amount = float(input("Enter purchase amount: ")
+# )
+# ----------
+
+# Michael Boyer (04/20/2025)
+# Replace old code for user input with validation logic
+# Using the valid variable, we will only end the loop setting
+# valid to True if the input does not raise a value error.
 while not valid:
     try:
         purchase_amount = float(input("Enter purchase amount (i.e. 200): $"))
         valid = True
     except ValueError:
         print("Invalid input. Please enter a numerical value for purchase amount.")
+# ---------
 
-# [-] --- DELETION: MICHAEL BOYER, 18 APR 2025 ---
+# [-] Removed by Michael Boyer (04/18/2025)
 # stateTax = 0.05 * purchase_amount
+# ---------
 
-# [+] ------ ADDITION: MICHAEL BOYER, 18 APR 2025 ------
-# Add the new tax graduation logic
-# If the purchase is less than $100, half the tax rate is applied
+# Michael Boyer (04/18/2025)
+# Replaced old code with new logic on graduated tax rates.
+
+# If the purchase amount is less than or equal to 100, then the tax rate is half
 if purchase_amount <= 100:
     stateTax = (0.05 / 2) * purchase_amount
-# Otherwise, if it's less than $500, the tax rate is 3/4 of the full rate
+
+# If the purchase amount is less than or equal to 500, then the tax rate is half
+# for the initial $100 from the total purchase amount, and 3/4 the rate for the
+# remaining amount
 elif purchase_amount <= 500:
     stateTax = (0.05 / 2) * 100 + (0.05 * 3/4) * (purchase_amount - 100)
-# And finally, if it's more than $500, the tax rate is full rate
+
+# And if the purchase amount is greater than 500, then the tax rate is half for the initial
+# $100 from the total purchase amount, 3/4 the rate for the next $400, and full rate for
+# the remaining amount
 else:
     stateTax = ((0.05 / 2) * 100 + (0.05 * 3/4) * 400 + 0.05 * (purchase_amount - 500))
+# ---------
 
 countyTax = 0.025 * purchase_amount
 totalTax = stateTax + countyTax
 totalSale = purchase_amount + totalTax
-# [-] --- DELETION: MICHAEL BOYER, 18 APR 2025 ---
+
+# [-] Removed by Michael Boyer (04/17/2025)
 # print("Purchase_amount" + format(purchase_amount.2f","), \
 # "state tax: $" + format(stateTax.2f" ,"), county tax : $" + \
 # format(countyTax.2f" ,"), Total tax: $" + format(totalTax.2f", "), \
 # "Total sales: $" + format(totalSale.2f" ,") )
+# ------------
 
-# [+] ------ ADDITION: MICHAEL BOYER, 18 APR 2025 ------
-# Corrected formatting syntax, moved values to new lines,
-# corrected "Purchase_amount" to "Purchase amount"
+# Michael Boyer (04/17/2025)
+# Fixed incorrect syntax for the previous print statement and
+# added new lines on each tax component for readability
 print("Purchase amount: $" + format(purchase_amount, ".2f"),
     "\nState tax: $" + format(stateTax, ".2f"), "\nCounty tax: $" +
     format(countyTax, ".2f"), "\nTotal tax: $" + format(totalTax, ".2f"),
     "\nTotal sales: $" + format(totalSale, ".2f"))
+# -------------

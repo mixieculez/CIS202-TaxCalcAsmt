@@ -9,21 +9,34 @@
 # amount after $500. Adjusted for inflation each year.
 #
 # Givens:
-# -
-# -
-# -
-# -
+# - State tax rate is 5% with graduated rates: half rate for first $100, 3/4
+#   rate for $100-$500, full rate after $500
+# - County tax rate is 2.5% on full purchase amount
+# - Tax law effective date is July 1, 2025
+# - Taxes adjusted for inflation each year (assumed at a rate of 3% per year)
 #
 # Inputs:
+# - Purchase amount (user-entered dollar value)
 #
 # Outputs:
+# - Purchase amount
+# - State tax amount
+# - County tax amount
+# - Total tax amount
+# - Total sale amount (purchase + taxes)
 #
 # Processes:
+# - Validate user input for purchase amount
+# - Calculate state tax based on graduated rates
+# - Calculate county tax
+# - Apply inflation adjustment if current date is after effective year
+# - Calculate total tax and sale amount
+# - Display formatted results
 #
 # Begin your program after this line
 
 # Michael Boyer (4/22/2025)
-# Import datetime to calculate inflation-adjusted tax rates
+# For dates to adjust taxes for inflation; assuming a rate of 3% per year
 import datetime
 # ------------
 
@@ -34,7 +47,12 @@ valid = False
 
 # (4/22) New tax law effective datetime, then the current date
 effective_date = datetime.date(2025, 7, 1)
-current_date = datetime.date.today()
+
+# (4/22) This would otherwise be datetime.date.today(), but
+# for demonstration purposes of the assignment, we will use any
+# arbitrary date after the effective date
+current_date = datetime.date(2025, 8, 1)
+years_elapsed = current_date.year - effective_date.year
 # -----------
 
 # [-] Removed by Michael Boyer (04/20/2025)
@@ -56,36 +74,45 @@ while not valid:
 
 # [-] Removed by Michael Boyer (04/18/2025)
 # stateTax = 0.05 * purchase_amount
-# ---------
+# ------------
 
 # Michael Boyer (04/18/2025)
 # Replaced old code with new logic on graduated tax rates.
-# (4/18) If the purchase amount is less than or equal to 100, then the tax rate is half
+
+# (4/18) If the purchase amount is less than or equal to 100, then the tax
+# rate is half
 if purchase_amount <= 100:
     stateTax = (0.05 / 2) * purchase_amount
 
-# (4/18) If the purchase amount is less than or equal to 500, then the tax rate is half
-# for the initial $100 from the total purchase amount, and 3/4 the rate for the
-# remaining amount
+# (4/18) If the purchase amount is less than or equal to 500, then the tax
+# rate is half for the initial $100 from the total purchase amount, and 3/4
+# the rate for the remaining amount
 elif purchase_amount <= 500:
     stateTax = (0.05 / 2) * 100 + (0.05 * 3/4) * (purchase_amount - 100)
 
-# (4/18) And if the purchase amount is greater than 500, then the tax rate is half for the initial
-# $100 from the total purchase amount, 3/4 the rate for the next $400, and full rate for
-# the remaining amount
+# (4/18) And if the purchase amount is greater than 500, then the tax rate is
+# half for the initial $100 from the total purchase amount, 3/4 the rate for
+# the next $400, and full rate for the remaining amount
 else:
     stateTax = ((0.05 / 2) * 100 + (0.05 * 3/4) * 400 + 0.05 * (purchase_amount - 500))
 # ------------
 
 # Michael Boyer (4/22/2025)
 # Implement logic to determine if we need to inflate taxes
-inflation_rate = 1.00
+
+# (4/22) We're initializing it at 1.00 because if the if statement
+# doesn't go through, we don't need to manipulate the multiplier
+inflation_multiplier = 1.00
+
+# (4/22) If we are in the future (relative to effective date)
+# We will take years_elapsed (current - effective year) and
+# calculate the inflation multiplier
 if current_date.year > effective_date.year:
-    inflation_rate = 1.03
+    inflation_multiplier = 1.03 ** years_elapsed
 
 # (4/22) Now we bump state and county taxes for inflation (if applicable)
-stateTax = stateTax * inflation_rate
-countyTax = (0.025 * purchase_amount) * inflation_rate
+stateTax = stateTax * inflation_multiplier
+countyTax = (0.025 * purchase_amount) * inflation_multiplier
 totalTax = stateTax + countyTax
 totalSale = purchase_amount + totalTax
 # ------------

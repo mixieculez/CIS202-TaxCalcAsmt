@@ -9,6 +9,10 @@
 # amount after $500. Adjusted for inflation each year.
 #
 # Givens:
+# -
+# -
+# -
+# -
 #
 # Inputs:
 #
@@ -18,11 +22,20 @@
 #
 # Begin your program after this line
 
+# Michael Boyer (4/22/2025)
+# Import datetime to calculate inflation-adjusted tax rates
+import datetime
+# ------------
+
 # Michael Boyer (04/20/2025)
 # Initialize variables for validity check and user input
 purchase_amount = 0.0
 valid = False
-# ----------
+
+# (4/22) New tax law effective datetime, then the current date
+effective_date = datetime.date(2025, 7, 1)
+current_date = datetime.date.today()
+# -----------
 
 # [-] Removed by Michael Boyer (04/20/2025)
 # purchase_amount = float(input("Enter purchase amount: ")
@@ -47,27 +60,35 @@ while not valid:
 
 # Michael Boyer (04/18/2025)
 # Replaced old code with new logic on graduated tax rates.
-
-# If the purchase amount is less than or equal to 100, then the tax rate is half
+# (4/18) If the purchase amount is less than or equal to 100, then the tax rate is half
 if purchase_amount <= 100:
     stateTax = (0.05 / 2) * purchase_amount
 
-# If the purchase amount is less than or equal to 500, then the tax rate is half
+# (4/18) If the purchase amount is less than or equal to 500, then the tax rate is half
 # for the initial $100 from the total purchase amount, and 3/4 the rate for the
 # remaining amount
 elif purchase_amount <= 500:
     stateTax = (0.05 / 2) * 100 + (0.05 * 3/4) * (purchase_amount - 100)
 
-# And if the purchase amount is greater than 500, then the tax rate is half for the initial
+# (4/18) And if the purchase amount is greater than 500, then the tax rate is half for the initial
 # $100 from the total purchase amount, 3/4 the rate for the next $400, and full rate for
 # the remaining amount
 else:
     stateTax = ((0.05 / 2) * 100 + (0.05 * 3/4) * 400 + 0.05 * (purchase_amount - 500))
-# ---------
+# ------------
 
-countyTax = 0.025 * purchase_amount
+# Michael Boyer (4/22/2025)
+# Implement logic to determine if we need to inflate taxes
+inflation_rate = 1.00
+if current_date.year > effective_date.year:
+    inflation_rate = 1.03
+
+# (4/22) Now we bump state and county taxes for inflation (if applicable)
+stateTax = stateTax * inflation_rate
+countyTax = (0.025 * purchase_amount) * inflation_rate
 totalTax = stateTax + countyTax
 totalSale = purchase_amount + totalTax
+# ------------
 
 # [-] Removed by Michael Boyer (04/17/2025)
 # print("Purchase_amount" + format(purchase_amount.2f","), \
